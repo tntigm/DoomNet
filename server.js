@@ -3,7 +3,7 @@ var app = require('express')();
 var server = require('http').Server(app);
 
 var ip = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
-var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 80;
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
 
 server.listen(port, ip, function() {
   console.log("Server running @ http://" + ip + ":" + port);
