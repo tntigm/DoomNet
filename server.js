@@ -2,8 +2,8 @@ var express = require('express');
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-server.listen(80, "testw3-doomnet.apps.us-east-2.starter.openshift-online.com/", function() {
-  console.log("Server running @ http://" + "localhost" + ":" + 8080);
+server.listen(80, "testw3-doomnet.apps.us-east-2.starter.openshift-online.com", function() {
+  console.log("Server running @ http://" + "testw3-doomnet.apps.us-east-2.starter.openshift-online.com" + ":" + 8080);
 });
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
