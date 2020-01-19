@@ -10,6 +10,7 @@ app.get('/', function (req, res) {
 });
 io.on('connection', function (socket) {
 	console.log("New connection!");
+	socket.emit('messages',"Hi :)");
   socket.emit('hello', { greeting: 'Hi socket ' + socket.id + ' this is Server speaking! Let\'s play ping-pong. You pass!' });
   socket.on('ping', function (data) { 
     console.log("received ping from client: ", data);
