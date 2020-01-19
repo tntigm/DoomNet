@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang=en>
 <head>
-
-</head>
-<body>
-   <h1>hello!!</h1>
-<script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<h1>hello =)</h1>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
 <script>
-   var socket = io("http://172.30.98.156:8080");
-   socket.on('message', function(data){document.write(data)});
+var socket = io.connect("http://doom-net-getnet5-doomnet.apps.us-east-2.starter.openshift-online.com/:8080");
+socket.emit('ping',"Hello server!");
+socket.on('hello',(data)=>{
+console.log(data);
+});
+
 </script>
-
-
 </body>
 </html>
