@@ -2,8 +2,8 @@ var express = require('express');
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-server.listen(8080, "172.30.98.156", function() {
-  console.log("Server running @ http://" + "172.30.98.156" + ":" + 8080);
+server.listen(8080, "0.0.0.0", function() {
+  console.log("Server running @ http://" + "0.0.0.0" + ":" + 8080);
 });
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
