@@ -7,6 +7,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
 <script>
 var socket = io.connect("http://testw3-doomnet.apps.us-east-2.starter.openshift-online.com:8080");
+  socket.on('connect',()=>{
+    console.log("Connected!!");
+  });
 socket.emit('ping',"Hello server!");
 socket.on('hello',(data)=>{
 console.log(data);
