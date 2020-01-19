@@ -3,11 +3,8 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-var messages = [{
-  id: 1,
-  text: "Hola soy un mensaje",
-  author: "Carlos Azaustre"
-}];
+var userOn={};
+
 
 // Configurar cabeceras y cors
 app.use((req, res, next) => {
@@ -26,13 +23,21 @@ app.get('/hello', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-  console.log('Alguien se ha conectado con Sockets');
-  socket.emit('messages', messages);
-
-  socket.on('new-message', function(data) {
+  console.log('New connection');
+ /* socket.on('new-message', function(data) {
     messages.push(data);
 
     io.sockets.emit('messages', messages);
+  });*/
+  
+  socket.on('new-user',(data)=>{
+    console.log(data);
+  });
+  socket.on('log-user',(data)=>{
+    
+  });
+  socket.on('send-msg',(data)=>{
+    
   });
 });
 
