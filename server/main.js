@@ -21,7 +21,7 @@ app.use(express.static('public'));
 app.get('/hello', function(req, res) {
   res.status(200).send("Hello World!");
 });
-
+io.origins('*:*');
 io.on('connection', function(socket) {
   console.log('New connection');
  /* socket.on('new-message', function(data) {
