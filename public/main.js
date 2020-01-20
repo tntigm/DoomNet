@@ -1,5 +1,4 @@
-var socket = io.connect('http://getnet-6-doomnet.apps.us-east-2.starter.openshift-online.com/', { secure:true,'forceNew': true });
-
+var socket = io.connect('http://0.0.0.0:8080', { 'forceNew': true });
 socket.on('messages', function(data) {
   console.log(data);
   render(data);
