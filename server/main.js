@@ -63,7 +63,7 @@ io.on('connection', function(socket) {
     if (err) throw err;
     console.log("User created!!");
      io.to(usersOn[data.socket]).emit('accept',true);
-  }
+  });
        }else{
         io.to(usersOn[data.socket]).emit('accept',false);
        }
