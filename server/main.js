@@ -111,7 +111,7 @@ io.on('settings',(data)=>{
   
 });
 
-);
+
 
 server.listen(8080, function() {
   console.log("Servidor corriendo en http://0.0.0.0:8080");
