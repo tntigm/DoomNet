@@ -35,7 +35,7 @@ app.get('/hello', function(req, res) {
 io.on('connection', function(socket) {
   console.log('Alguien se ha conectado con Sockets');
 
-  usersOn[socket.id]={state=true,login=false,nick="",id:socket.id};
+  usersOn[socket.id]={state:true,login:false,nick:"",id:socket.id};
   
   
   socket.on('new-message', function(data) {
