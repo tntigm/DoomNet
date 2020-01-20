@@ -5,7 +5,7 @@ var io = require('socket.io')(server);
 
 var userOn={};
 
-
+io.origins(['https://sites.google.com/view/doomnet/userreg']);
 // Configurar cabeceras y cors
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -21,7 +21,7 @@ app.use(express.static('public'));
 app.get('/hello', function(req, res) {
   res.status(200).send("Hello World!");
 });
-io.origins('*:*');
+
 io.on('connection', function(socket) {
   console.log('New connection');
  /* socket.on('new-message', function(data) {
