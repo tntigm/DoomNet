@@ -3,7 +3,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://0.0.0.0:27017/";
+var url = "mongodb://doomnet-getnet-secure-doomnet.apps.us-east-2.starter.openshift-online.com:27017/";
 
 
 MongoClient.connect(url, function(err, db) {
