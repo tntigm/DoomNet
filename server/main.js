@@ -58,7 +58,7 @@ io.on('connection', function(socket) {
   dbo.collection("users").find(User).toArray(function(err, result) {
     if (err) throw err;
     if(result == null){
-      var u = { name:data.name, password:data.password,friends:{},id:data.name+"#"Math.floor(Math.random()*10)+""+Math.floor(Math.random()*10)};
+      var u = { name:data.name, password:data.password,friends:{},id:data.name+"#"+Math.floor(Math.random()*10)+""+Math.floor(Math.random()*10)};
         dbo.collection("users").insertOne(u, function(err, res) {
     if (err) throw err;
     console.log("User created!!");
