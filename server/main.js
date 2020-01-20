@@ -24,11 +24,11 @@ app.get('/hello', function(req, res) {
 
 io.on('connection', function(socket) {
   console.log('New connection');
- /* socket.on('new-message', function(data) {
+  socket.on('new-message', function(data) {
     messages.push(data);
 
     io.sockets.emit('messages', messages);
-  });*/
+  });
   
   socket.on('new-user',(data)=>{
     console.log(data);
