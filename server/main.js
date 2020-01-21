@@ -13,12 +13,12 @@ mongoPassword = process.env.password;
 mongoUser = process.env.username;   
 var url = "mongodb://doomnet-getnet-secure-doomnet.apps.us-east-2.starter.openshift-online.com:27017/";
 var initDb = function(callback) {
-  if (mongoURL == null) return;
+  if (mongoURL == null){callback("URL igual a null//Mongo");return;}
 
   var mongodb = require('mongodb');
-  if (mongodb == null) return;
+  if (mongodb == null){callback("Problemas cargando el package//Mongo");return;}
   
-  if (mongoURL == null) {
+  
   var mongoHost, mongoPort, mongoDatabase, mongoPassword, mongoUser;
   if (process.env.database_name) {
     mongoDatabase = process.env.database_name;
@@ -32,6 +32,9 @@ var initDb = function(callback) {
         mongoPort = mongoUriParts[1];
       }
     }
+  }else{
+   callback("No se puede cargar.//Mongo");
+      return;
   }
   
   if (mongoHost && mongoPort && mongoDatabase) {
@@ -43,7 +46,7 @@ var initDb = function(callback) {
     mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
     mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
   }
- }
+ 
   
 var db = null,
     dbDetails = new Object();
