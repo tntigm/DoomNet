@@ -2,72 +2,17 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var MongoClient = require('mongodb').MongoClient;
-
-var mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL||"mongodb://doomnet-getnet-secure-doomnet.apps.us-east-2.starter.openshift-online.com:27017/",
-    mongoURLLabel = "";
-
-var mongodb = require('mongodb');
-mongoDatabase = process.env.database_name;
-mongoPassword = process.env.password;
-mongoUser = process.env.username;   
-var url = "mongodb://0.0.0.0:27017/";
-var initDb = function(callback) {
-  if (mongoURL == null){callback("URL igual a null//Mongo");return;}
-
-  var mongodb = require('mongodb');
-  if (mongodb == null){callback("Problemas cargando el package//Mongo");return;}
-  
-  
-  var mongoHost, mongoPort, mongoDatabase, mongoPassword, mongoUser;
-
-    mongoDatabase = "mydb";
-    mongoPassword = "tntomg999";
-    mongoUser = "tntigm";
-    var mongoUriParts = url.split("//");
-    if (mongoUriParts.length == 2) {
-      mongoUriParts = mongoUriParts[1].split(":");
-      if (mongoUriParts && mongoUriParts.length == 2) {
-        mongoHost = mongoUriParts[0];
-        mongoPort = mongoUriParts[1];
-      }
-    }
-  
-  
-  if (mongoHost && mongoPort && mongoDatabase) {
-    mongoURLLabel = mongoURL = 'mongodb://';
-    if (mongoUser && mongoPassword) {
-      mongoURL += mongoUser + ':' + mongoPassword + '@';
-    }
-    // Provide UI label that excludes user id and pw
-    mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
-    mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
-  }
- 
-  
-var db = null,
-    dbDetails = new Object();
-  
-  mongodb.connect(mongoURL, function(err, conn) {
-    if (err) {
-      callback(err);
-      return;
-    }
-
-    db = conn;
-    dbDetails.databaseName = db.databaseName;
-    dbDetails.url = mongoURLLabel;
-    dbDetails.type = 'MongoDB';
-
-    console.log('Connected to MongoDB at: %s', mongoURL);
-  });
-};
 
 
 
-var usersOn={};
+
+//Variables
+var usersOn={};  //Diccionario con los sockets ip y nickname y varios datos.   name(String),ip(String),login(bool),state(bool)
+//Variables
 
 
+
+//CORS header
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -75,65 +20,73 @@ app.use((req, res, next) => {
     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
-app.use(express.static('public'));
+//CORS header
 
+app.use(express.static('public'));
 app.get('/hello', function(req, res) {
-   if (!db) {
-    initDb(function(err){});
-  }
   res.status(200).send("Hello World!");
 });
 
+
+
+//Evento conecciones
 io.on('connection', function(socket) {
   console.log('Alguien se ha conectado con Sockets');
 
-  
+//Uso en local  
   socket.on('new-message', function(data) {
     messages.push(data);
 
     io.sockets.emit('messages', messages);
-  });
-  
-    
-  io.on('link',(data)=>{
+});
+//Uso en local
+
+//Linkear sockets    
+io.on('link',(data)=>{
     
       
-  });
+});
   
-  
-  io.on('newUser',(data)=>{
+//Crear nuevo usuario  
+io.on('newUser',(data)=>{
     
     
     
-  });
+});
   
   
-  
-  io.on('logIn',(data)=>{
+//Log usuario
+io.on('logIn',(data)=>{
 
     
-  });
+});
   
-  
-  io.on('recMsg',(data)=>{
+//Reenviar mensaje  
+io.on('recMsg',(data)=>{
 
   
-  });
+});
   
+//Añadir amigo  
 io.on('addFriend',(data)=>{
   
     
 });
-  
+ 
+//Acceder a settings
 io.on('settings',(data)=>{
   
     
 });
+});
 
+//Iniciar mongoDB
 initDb(function(err){
 console.log("Error:"+err);
 });
 
+//Escuchar socket
 server.listen(8080, function() {
   console.log("Servidor corriendo en http://0.0.0.0:8080");
 });
+
