@@ -3,18 +3,66 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var MongoClient = require('mongodb').MongoClient;
+var mongodb = require('mongodb');
+mongoDatabase = process.env.database_name;
+mongoPassword = process.env.password;
+mongoUser = process.env.username;   
 var url = "mongodb://doomnet-getnet-secure-doomnet.apps.us-east-2.starter.openshift-online.com:27017/";
+var initDb = function(callback) {
+  if (mongoURL == null) return;
 
+  var mongodb = require('mongodb');
+  if (mongodb == null) return;
+  
+  mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
+    mongoURLLabel = "";
+  
+  if (mongoURL == null) {
+  var mongoHost, mongoPort, mongoDatabase, mongoPassword, mongoUser;
+  if (process.env.database_name) {
+    mongoDatabase = process.env.database_name;
+    mongoPassword = process.env.password;
+    mongoUser = process.env.username;
+    var mongoUriParts = process.env.uri && process.env.uri.split("//");
+    if (mongoUriParts.length == 2) {
+      mongoUriParts = mongoUriParts[1].split(":");
+      if (mongoUriParts && mongoUriParts.length == 2) {
+        mongoHost = mongoUriParts[0];
+        mongoPort = mongoUriParts[1];
+      }
+    }
+  }
+  
+  if (mongoHost && mongoPort && mongoDatabase) {
+    mongoURLLabel = mongoURL = 'mongodb://';
+    if (mongoUser && mongoPassword) {
+      mongoURL += mongoUser + ':' + mongoPassword + '@';
+    }
+    // Provide UI label that excludes user id and pw
+    mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
+    mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
+  }
+ }
+  
+var db = null,
+    dbDetails = new Object();
+  
+  mongodb.connect(mongoURL, function(err, conn) {
+    if (err) {
+      callback(err);
+      return;
+    }
 
-MongoClient.connect(url, function(err, db) {
-  if (err) throw err;
-  var dbo = db.db("mydb");
-  dbo.createCollection("users", function(err, res) {
-    if (err) throw err;
-    console.log("Collection created!");
-    db.close();
+    db = conn;
+    dbDetails.databaseName = db.databaseName;
+    dbDetails.url = mongoURLLabel;
+    dbDetails.type = 'MongoDB';
+
+    console.log('Connected to MongoDB at: %s', mongoURL);
   });
-}); 
+};
+
+
 
 var usersOn={};
 
@@ -29,6 +77,9 @@ app.use((req, res, next) => {
 app.use(express.static('public'));
 
 app.get('/hello', function(req, res) {
+   if (!db) {
+    initDb(function(err){});
+  }
   res.status(200).send("Hello World!");
 });
 
