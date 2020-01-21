@@ -20,11 +20,11 @@ var initDb = function(callback) {
   
   
   var mongoHost, mongoPort, mongoDatabase, mongoPassword, mongoUser;
-  if (process.env.database_name) {
-    mongoDatabase = process.env.database_name;
-    mongoPassword = process.env.password;
-    mongoUser = process.env.username;
-    var mongoUriParts = process.env.uri && process.env.uri.split("//");
+
+    mongoDatabase = "mydb";
+    mongoPassword = "tntomg999";
+    mongoUser = "tntigm";
+    var mongoUriParts = url.split("//");
     if (mongoUriParts.length == 2) {
       mongoUriParts = mongoUriParts[1].split(":");
       if (mongoUriParts && mongoUriParts.length == 2) {
@@ -32,10 +32,7 @@ var initDb = function(callback) {
         mongoPort = mongoUriParts[1];
       }
     }
-  }else{
-   callback("No se puede cargar.//Mongo");
-      return;
-  }
+  
   
   if (mongoHost && mongoPort && mongoDatabase) {
     mongoURLLabel = mongoURL = 'mongodb://';
