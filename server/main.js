@@ -164,7 +164,7 @@ io.on('settings',(data)=>{
 });
 
 initDb(function(err){
-console.log(err);
+console.log("Error:"+err);
 });
 
 server.listen(8080, function() {
