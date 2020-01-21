@@ -3,6 +3,10 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var MongoClient = require('mongodb').MongoClient;
+
+var mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
+    mongoURLLabel = "";
+
 var mongodb = require('mongodb');
 mongoDatabase = process.env.database_name;
 mongoPassword = process.env.password;
@@ -13,9 +17,6 @@ var initDb = function(callback) {
 
   var mongodb = require('mongodb');
   if (mongodb == null) return;
-  
-  mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
-    mongoURLLabel = "";
   
   if (mongoURL == null) {
   var mongoHost, mongoPort, mongoDatabase, mongoPassword, mongoUser;
