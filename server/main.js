@@ -162,8 +162,8 @@ io.on('settings',(data)=>{
   
 });
 
-initDb(function(){
-
+initDb(function(err){
+console.log(err);
 });
 
 server.listen(8080, function() {
