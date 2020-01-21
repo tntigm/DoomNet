@@ -11,7 +11,7 @@ var mongodb = require('mongodb');
 mongoDatabase = process.env.database_name;
 mongoPassword = process.env.password;
 mongoUser = process.env.username;   
-var url = "mongodb://doomnet-getnet-secure-doomnet.apps.us-east-2.starter.openshift-online.com:27017/";
+var url = "mongodb://0.0.0.0:27017/";
 var initDb = function(callback) {
   if (mongoURL == null){callback("URL igual a null//Mongo");return;}
 
