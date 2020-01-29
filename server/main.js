@@ -5,7 +5,7 @@ var io = require('socket.io')(server);
 var mongoose = require('mongoose');
 
 function initDb(){
-  mongoose.connect('mongodb://0.0.0.0/doomnetDB', {useNewUrlParser: true});
+  mongoose.connect('mongodb://172.30.212.254/doomnetDB', {useNewUrlParser: true});
   var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function() {
