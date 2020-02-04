@@ -5,7 +5,7 @@ var io = require('socket.io')(server);
 var mongoose = require('mongoose');
 
 function initDb(){
-  mongoose.connect('mongodb://172.30.212.254/doomnetDB', {useNewUrlParser: true});
+  mongoose.connect('mongodb://172.30.212.254/doomnetDB3', {useNewUrlParser: true});
   var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function() {
@@ -20,7 +20,7 @@ function initDb(){
 
 
 //Variables
-var usersOn={};  //Diccionario con los sockets ip y nickname y varios datos.   name(String),login(bool),state(bool)
+let usersOn={};  //Diccionario con los sockets ip y nickname y varios datos.   name(String),login(bool),state(bool)
 //Variables
 
 
@@ -44,12 +44,12 @@ app.get('/hello', function(req, res) {
 
 //Evento conecciones
 io.on('connection', function(socket) {
-  console.log('Alguien se ha conectado con Sockets');
-
   if(usersOn[socket.request.connection.remoteAddress]==null){
   usersOn[socket.request.connection.remoteAddress]={name:"",state:false};
+  console.log('Alguien se ha conectado con Sockets');
   }
-
+  
+  console.log(usersOn);
 //Uso en local  
   socket.on('new-message', function(data) {
     messages.push(data);
@@ -123,7 +123,7 @@ io.on('addFriend',(data)=>{
     }
     if(friends!=null){
 
-      io.to(usersOn[data.ip]).emit('recvF',friends);
+      io.to(usersOn[data.ip]).emit('recvF',{friends:friends});
 
     }
   });
@@ -163,3 +163,4 @@ console.log("Error:"+err);
 server.listen(8080, function() {
   console.log("Servidor corriendo en http://0.0.0.0:8080");
 });
+
