@@ -48,7 +48,7 @@ io.on('connection', function(socket) {
   usersOn[socket.request.connection.remoteAddress]={name:"",state:false};
   console.log('Alguien se ha conectado con Sockets');
   }
-  
+  socket.emit('ip',{ip:socket.request.connection.remoteAddress});
   console.log(usersOn);
 //Uso en local  
   socket.on('new-message', function(data) {
