@@ -1,4 +1,4 @@
-var express = require('express');
+ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
@@ -11,12 +11,12 @@ function initDb(){
   db.once('open', function() {
     console.log(">>Connected to mongo succefully.");
 
-    var userSchema = new mongoose.Schema({name:String,password:String,friend:[{name:String}],state:Boolean});
-    var userComp = mongoose.model('User',userSchema);
+  
   });
 }
 
-
+var userSchema = new mongoose.Schema({name:String,password:String,friend:[String],state:Boolean});
+var User = mongoose.model('User',userSchema);
 
 
 //Variables
@@ -50,6 +50,7 @@ io.on('connection', function(socket) {
   }
   socket.emit('ip',{ip:socket.request.connection.remoteAddress});
   console.log(usersOn);
+  
 //Uso en local  
   socket.on('new-message', function(data) {
     messages.push(data);
@@ -60,21 +61,23 @@ io.on('connection', function(socket) {
 
   
 //Crear nuevo usuario  
-io.on('newUser',(data)=>{
+io.on('new-user',(data)=>{
+  console.log("Creating user...");
     User.findOne({"name":data.name},"name",(err,user)=>{
       if (err){
-
-        io.to(usersOn[data.ip]).emit('accept',false);
-
-        return handleError(err);
+        io.to(usersOn[data.ip]).emit('accept',{recv:false});
+        console.log("Error creating user.");
+        console.log(err);
       }
       if(user!=null){
+        
         var usr = new User({name:user.name,password:user.pass,friend:[],state:true}).save((err)=>{
           if (err) throw err;
           console.log("New user:"+user.name);
         });
    
-        io.to(usersOn[data.ip]).emit('accept',true);
+        io.to(usersOn[data.ip]).emit('accept',{recv:true});
+      
       }
     });
     
@@ -152,6 +155,12 @@ io.on('getFriends',(data)=>{
   });
 }
 );
+io.on("disconnect",()=>{
+console.log(usersOn[socekt].name+" has disconnected.");
+
+
+});
+
 });
 
 //Iniciar mongoDB
