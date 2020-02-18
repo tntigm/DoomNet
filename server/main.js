@@ -44,13 +44,15 @@ app.get('/hello', function(req, res) {
 
 //Evento conecciones
 io.on('connection', function(socket) {
-  if(usersOn[socket.request.connection.remoteAddress]==null){
-  usersOn[socket.request.connection.remoteAddress]={name:"",state:false};
+  if(usersOn[socket]==null){
   console.log('Alguien se ha conectado con Sockets');
   }
-  socket.emit('ip',{ip:socket.request.connection.remoteAddress});
   console.log(usersOn);
   
+io.on("uIP",(data)=>{
+usersOn[socket]={ip:data.IP};
+});
+
 //Uso en local  
   io.on('new-message', function(data) {
     messages.push(data);
@@ -171,5 +173,4 @@ console.log("Error:"+err);
 server.listen(8080, function() {
   console.log("Servidor corriendo en http://0.0.0.0:8080");
 });
-
 
