@@ -44,14 +44,15 @@ app.get('/hello', function(req, res) {
 
 //Evento conecciones
 io.on('connection', function(socket) {
+  io.on("uIP",(data)=>{
+    usersOn[socket]={ip:data.IP};
+    console.log(usersOn);
+    });
+
   if(usersOn[socket]==null){
   console.log('Alguien se ha conectado con Sockets');
-  }
   console.log(usersOn);
-  
-io.on("uIP",(data)=>{
-usersOn[socket]={ip:data.IP};
-});
+  }
 
 //Uso en local  
   io.on('new-message', function(data) {
@@ -61,6 +62,7 @@ usersOn[socket]={ip:data.IP};
 });
 //Uso en local
 
+console.log("lol");
   
 //Crear nuevo usuario  
 io.on('new-user',(data)=>{
@@ -82,9 +84,6 @@ io.on('new-user',(data)=>{
       
       }
     });
-    
-
-    
 });
   
   
