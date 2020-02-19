@@ -59,11 +59,9 @@ io.on('connection', function(socket) {
     io.sockets.emit('messages', messages);
 });
 //Uso en local
-
-console.log("lol");
   
 //Crear nuevo usuario  
-io.on('new-user',(data)=>{
+io.on("newUser",(data)=>{
   console.log("Creating user...");
     User.findOne({"name":data.name},"name",(err,user)=>{
       if (err){
@@ -154,10 +152,6 @@ io.on('getFriends',(data)=>{
   });
 }
 );
-io.on("disconnect",()=>{
-console.log(usersOn[socket].name+" has disconnected.");
-delete usersOn[socket];
-});
 
 });
 
