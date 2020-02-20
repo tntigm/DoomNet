@@ -52,6 +52,11 @@ io.on('connection', function(socket) {
     usersOn[socket]={ip:data.IP};
     console.log(usersOn[socket]);
     });
+
+    io.on("test",(data)=>{
+      console.log(data);
+    });
+
 //Uso en local  
   io.on('new-message', function(data) {
     messages.push(data);
