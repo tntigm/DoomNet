@@ -48,12 +48,12 @@ io.on('connection', function(socket) {
   console.log('Alguien se ha conectado con Sockets');
   console.log(usersOn);
   }
-  io.on("uIP",(data)=>{
+  io.on('uIP',(data)=>{
     usersOn[socket]={ip:data.IP};
     console.log(usersOn[socket]);
     });
 
-    io.on("test",(data)=>{
+    io.on('test',function(data){
       console.log(data);
     });
 
