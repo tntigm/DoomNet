@@ -48,17 +48,12 @@ io.on('connection', function(socket) {
   console.log('Alguien se ha conectado con Sockets');
   console.log(usersOn);
   }
-  io.on('uIP',(data)=>{
+  socket.on("uIP",(data)=>{
     usersOn[socket]={ip:data.IP};
     console.log(usersOn[socket]);
     });
-
-    io.on('test',function(data){
-      console.log(data);
-    });
-
 //Uso en local  
-  io.on('new-message', function(data) {
+socket.on('new-message', function(data) {
     messages.push(data);
 
     io.sockets.emit('messages', messages);
@@ -66,7 +61,7 @@ io.on('connection', function(socket) {
 //Uso en local
   
 //Crear nuevo usuario  
-io.on("newUser",(data)=>{
+socket.on("newUser",(data)=>{
   console.log("Creating user...");
     User.findOne({"name":data.name},"name",(err,user)=>{
       if (err){
@@ -89,7 +84,7 @@ io.on("newUser",(data)=>{
   
   
 //Log usuario
-io.on('logIn',(data)=>{
+socket.on('logIn',(data)=>{
   User.findOne({"name":data.name},"name",(err,user)=>{
     if (err){
 
@@ -110,14 +105,14 @@ io.on('logIn',(data)=>{
 });
   
 //Reenviar mensaje  
-io.on('sendMsg',(data)=>{
+socket.on('sendMsg',(data)=>{
 
   io.to(usersOn[data.to]).emit('recvMsg',{from:data.from,msg:data.msg});
   
 });
   
 //Añadir amigo  
-io.on('addFriend',(data)=>{
+socket.on('addFriend',(data)=>{
   User.findOne({"name":data.name},"name friend",(err,friends)=>{
     if (err){
 
@@ -135,13 +130,13 @@ io.on('addFriend',(data)=>{
 });
  
 //Acceder a settings
-io.on('settings',(data)=>{
+socket.on('settings',(data)=>{
   
     
 });
 
 //Pedir los amigos que tiene
-io.on('getFriends',(data)=>{
+socket.on('getFriends',(data)=>{
   User.findOne({"name":data.name},"name friend",(err,friends)=>{
     if (err){
 
