@@ -66,8 +66,8 @@ socket.on("newUser",(data)=>{
     User.findOne({"name":data.name},"name",(err,user)=>{
       if (err){
        /* io.to(usersOn[data.ip]).emit('accept',{recv:false});
-        console.log("Error creating user.");
-        console.log(err);*/
+        console.log("Error creating user.");*/
+        console.log(err);
         if(user!=null){
         
           var usr = new User({name:user.name,password:user.pass,friend:[],state:true}).save((err)=>{
@@ -77,6 +77,8 @@ socket.on("newUser",(data)=>{
      
           io.to(usersOn[data.ip]).emit('accept',{recv:true});
         
+        }else{
+          console.log("Error creating user.");
         }
       }
       
