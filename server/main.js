@@ -71,7 +71,7 @@ socket.on("newUser",(data)=>{
         if(user == null || user == undefined){
         
           var usr = new User({name:user.name,password:user.pass,friend:[],state:true}).save((err)=>{
-            if (err) throw err;
+            if (err!=null || err!=undefined){console.log(err);};
             console.log("New user:"+user.name);
           });
      
