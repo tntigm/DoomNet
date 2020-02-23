@@ -70,7 +70,7 @@ socket.on("newUser",(data)=>{
         console.log("Error creating user.");*/
         if(user ==null || user ==undefined){
         
-          var usr = new User({name:data.name,password:data.pass,friend:[]});
+          var usr = new User({name:data.name,password:data.password,friend:[]});
           usr.save((er)=>{
             console.log(usr);
             if (er!=null || er!=undefined){console.log(er);}else{
