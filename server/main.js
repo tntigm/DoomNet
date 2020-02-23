@@ -65,20 +65,21 @@ socket.on("newUser",(data)=>{
   console.log("Creating user...");
     User.findOne({"name":data.name},"name",(err,user)=>{
       if (err){
-        io.to(usersOn[data.ip]).emit('accept',{recv:false});
+       /* io.to(usersOn[data.ip]).emit('accept',{recv:false});
         console.log("Error creating user.");
-        console.log(err);
-      }
-      if(user!=null){
+        console.log(err);*/
+        if(user!=null){
         
-        var usr = new User({name:user.name,password:user.pass,friend:[],state:true}).save((err)=>{
-          if (err) throw err;
-          console.log("New user:"+user.name);
-        });
-   
-        io.to(usersOn[data.ip]).emit('accept',{recv:true});
-      
+          var usr = new User({name:user.name,password:user.pass,friend:[],state:true}).save((err)=>{
+            if (err) throw err;
+            console.log("New user:"+user.name);
+          });
+     
+          io.to(usersOn[data.ip]).emit('accept',{recv:true});
+        
+        }
       }
+      
     });
 });
   
