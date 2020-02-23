@@ -70,8 +70,9 @@ socket.on("newUser",(data)=>{
         if(user ==null || user ==undefined){
         
           var usr = new User({name:data.name,password:data.pass,friend:[],state:true}).save((er)=>{
-            if (er!=null || er!=undefined){console.log(er);};
-            console.log("New user:"+usr.name);
+            if (er!=null || er!=undefined){console.log(er);}else{
+            console.log("New user:"+data.name);
+            }
           });
      
           io.to(usersOn[data.ip]).emit('accept',{recv:true});
