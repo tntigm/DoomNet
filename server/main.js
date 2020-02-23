@@ -15,7 +15,7 @@ function initDb(){
   });
 }
 
-var userSchema = new mongoose.Schema({name:String,password:String,friend:[String],state:Boolean});
+var userSchema = new mongoose.Schema({name:String,password:String,friend:[String]});
 var User = mongoose.model('User',userSchema);
 
 
@@ -63,13 +63,16 @@ socket.on('new-message', function(data) {
 //Crear nuevo usuario  
 socket.on("newUser",(data)=>{
   console.log("Creating user...");
+  console.log(data);
     User.findOne({"name":data.name},"name",(err,user)=>{
       if (err){
        /* io.to(usersOn[data.ip]).emit('accept',{recv:false});
         console.log("Error creating user.");*/
         if(user ==null || user ==undefined){
         
-          var usr = new User({name:data.name,password:data.pass,friend:[],state:true}).save((er)=>{
+          var usr = new User({name:data.name,password:data.pass,friend:[]});
+          usr.save((er)=>{
+            console.log(usr);
             if (er!=null || er!=undefined){console.log(er);}else{
             console.log("New user:"+data.name);
             }
