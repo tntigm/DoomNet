@@ -68,7 +68,7 @@ socket.on("newUser",(data)=>{
        /* io.to(usersOn[data.ip]).emit('accept',{recv:false});
         console.log("Error creating user.");*/
         console.log(err);
-        if(user!=null || user!=undefined){
+        if(user == null || user == undefined){
         
           var usr = new User({name:user.name,password:user.pass,friend:[],state:true}).save((err)=>{
             if (err) throw err;
