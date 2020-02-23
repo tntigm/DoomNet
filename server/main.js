@@ -17,7 +17,7 @@ function initDb(){
 
 var userSchema = new mongoose.Schema({name:String,password:String,friend:[String]});
 var User = mongoose.model('User',userSchema);
-
+console.log(User);
 
 //Variables
 let usersOn={};  //Diccionario con los sockets ip y nickname y varios datos.   name(String),login(bool),state(bool)
@@ -49,7 +49,7 @@ io.on('connection', function(socket) {
   console.log(usersOn);
   }
   socket.on("uIP",(data)=>{
-    usersOn[socket]={ip:data.IP};
+    usersOn[socket]={ip:data.IP,nick:data.nick};
     console.log(usersOn[socket]);
     });
 //Uso en local  
@@ -70,7 +70,7 @@ socket.on("newUser",(data)=>{
         console.log("Error creating user.");*/
         if(user ==null || user ==undefined){
         
-          var usr = new User({name:data.name,password:data.password,friend:[]});
+          var usr = User.create({name:data.name,password:data.password,friend:[]});
           usr.save((er)=>{
             console.log(usr);
             if (er!=null || er!=undefined){console.log(er);}else{
