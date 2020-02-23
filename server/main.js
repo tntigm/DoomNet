@@ -40,7 +40,9 @@ app.get('/hello', function(req, res) {
   res.status(200).send("Hello World!");
 });
 
-
+function searchKey(obj,value){
+  return Object.keys(obj).find(key => obj[key]===value);
+}
 
 //Evento conecciones
 io.on('connection', function(socket) {
@@ -49,7 +51,7 @@ io.on('connection', function(socket) {
   console.log(usersOn);
   }
   socket.on("uIP",(data)=>{
-    usersOn[socket]={ip:data.IP,nick:data.nick};
+    usersOn[socket]={ip:data.IP,nick:data.nick,sock:socket};
     console.log(usersOn[socket]);
     });
 //Uso en local  
@@ -113,7 +115,7 @@ socket.on('logIn',(data)=>{
 //Reenviar mensaje  
 socket.on('sendMsg',(data)=>{
 
-  io.to(usersOn[data.to]).emit('recvMsg',{from:data.from,msg:data.msg});
+  io.to(searchKey(usersOn,data.to).sock).emit('recvMsg',{from:data.from,msg:data.msg});
   
 });
   
