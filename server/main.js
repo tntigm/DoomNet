@@ -67,12 +67,11 @@ socket.on("newUser",(data)=>{
       if (err){
        /* io.to(usersOn[data.ip]).emit('accept',{recv:false});
         console.log("Error creating user.");*/
-        console.log(err);
-        if(user == null || user == undefined){
+        if(user ==null || user ==undefined){
         
-          var usr = new User({name:user.name,password:user.pass,friend:[],state:true}).save((err)=>{
-            if (err!=null || err!=undefined){console.log(err);};
-            console.log("New user:"+user.name);
+          var usr = new User({name:data.name,password:data.pass,friend:[],state:true}).save((er)=>{
+            if (er!=null || er!=undefined){console.log(er);};
+            console.log("New user:"+usr.name);
           });
      
           io.to(usersOn[data.ip]).emit('accept',{recv:true});
